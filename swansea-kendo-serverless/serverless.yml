@@ -2,7 +2,7 @@ plugins:
   - serverless-s3-sync
   - serverless-plugin-cloudfront-lambda-edge
 
-service: kenryukai-serverless
+service: swansea-kendo-club-serverless
 
 provider:
   name: aws
@@ -11,17 +11,17 @@ provider:
   deploymentBucket:
     name: com.serverless.${self:provider.region}.dep.archive
   stackTags:
-    website: ken-ryu-kai
+    website: swansea-kendo-site
 
 custom:
-  websiteAlias: "ken-ryu-kai.co.uk"
+  websiteAlias: "swansea-kendo.club"
   objectPrefix: '${self:provider.stage}-${self:service}'
   s3Sync:
     - bucketName: '${self:custom.objectPrefix}'
       localDir: build
       defaultContentType: text/html # optional
 #  customDomain:
-#    domainName: api.ken-ryu-kai.co.uk
+#    domainName: api.swansea-kendo.club
 #    certificateName: 'api.${self:custom.websiteAlias}'
 #    basePath: ''
 #    stage: ${self:provider.stage}
@@ -97,7 +97,7 @@ resources:
           HttpVersion: 'http2' 
           ViewerCertificate:
             SslSupportMethod: "sni-only"
-            AcmCertificateArn: ${ssm:kenryukai-base-cert}
+            AcmCertificateArn: ${ssm:swansea-kendo-club-cert}
           Origins:
             -
               Id: 'WebsiteBucketOrigin'
