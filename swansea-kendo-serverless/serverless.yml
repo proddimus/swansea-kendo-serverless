@@ -70,6 +70,7 @@ resources:
         DistributionConfig:
           Aliases:
             - ${self:custom.websiteAlias}
+            - www.${self:custom.websiteAlias}
           DefaultCacheBehavior:
             TargetOriginId: 'WebsiteBucketOrigin'
             ViewerProtocolPolicy: 'redirect-to-https'
@@ -97,7 +98,7 @@ resources:
           HttpVersion: 'http2' 
           ViewerCertificate:
             SslSupportMethod: "sni-only"
-            AcmCertificateArn: ${ssm:swansea-kendo-club-cert}
+            AcmCertificateArn: ${ssm:swansea-kendo-club-base-cert}
           Origins:
             -
               Id: 'WebsiteBucketOrigin'
