@@ -18,7 +18,7 @@ custom:
   objectPrefix: '${self:provider.stage}-${self:service}'
   s3Sync:
     - bucketName: '${self:custom.objectPrefix}'
-      localDir: build
+      localDir: _site
       defaultContentType: text/html # optional
 #  customDomain:
 #    domainName: api.swansea-kendo.club

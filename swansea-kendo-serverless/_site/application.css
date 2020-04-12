@@ -1,0 +1,140 @@
+body {
+  height: 100%;
+}
+
+.main-contain {
+  height: 100%;
+}
+
+.container .card-timetable div {
+  background-color: #FFFFFF;
+}
+
+.float-right{
+  float: right;
+}
+
+.album {
+  min-height: 50rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f7f7f7;
+}
+
+.jumbotron {
+  color: #292b2c;
+  background: transparent;
+  border-radius: 0px;
+  height: 100%;
+}
+
+.jumbo-text-container {
+  position: absolute;
+  bottom: 0px;
+}
+
+.jumbotron h1{
+  color: #292b2c!important;
+}
+
+@media all and (min-width:960px) and (max-width: 1024px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:801px) and (max-width: 959px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:769px) and (max-width: 800px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:569px) and (max-width: 768px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:481px) and (max-width: 568px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:321px) and (max-width: 480px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+@media all and (min-width:0px) and (max-width: 320px) {
+  /* put your css styles in here */
+  .jumbotron h1{
+    color: #FFFFFF!important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+}
+
+.content {
+  height: 100%;
+}
+
+.notice {
+  background: transparent;
+}
+
+.alert {
+  background: transparent;
+}
+
+.btn-jumbo{
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.no-margin-row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.navbar {
+  font-family: 'Ubuntu', serif;
+  border-radius: 0px;
+}
+
+.navbar-brand {
+  font-family: 'Ubuntu', serif;
+}
+
+.blog-link {
+  position: absolute;
+  bottom: 0.2em;
+  right: 0.2em;
+}
+
+.gallery-image{
+  width: 100%;
+  display: block;
+}
+
+.practice-description {
+ min-height: 120px; 
+}
