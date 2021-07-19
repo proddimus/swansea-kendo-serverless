@@ -1,19 +1,31 @@
 plugins:
   - serverless-s3-sync
   - serverless-plugin-cloudfront-lambda-edge
+  - serverless-plugin-ifelse
 
 service: swansea-kendo-club-serverless
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs14.x
   region: eu-west-2
+  stage: ${opt:stage, 'dev'}
   deploymentBucket:
     name: com.serverless.${self:provider.region}.dep.archive
   stackTags:
     website: swansea-kendo-site
 
 custom:
+  serverlessIfElse:
+    - If: '"${self:provider.stage}" != "dev"'
+      Set:
+        resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
+          - "${self:provider.stage}.swansea-kendo.club"
+      ElseSet:
+        resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
+          - www.${self:custom.websiteAlias}
+          - ${self:custom.websiteAlias}
+          
   websiteAlias: "swansea-kendo.club"
   objectPrefix: '${self:provider.stage}-${self:service}'
   s3Sync:
@@ -69,8 +81,7 @@ resources:
       Properties:
         DistributionConfig:
           Aliases:
-            - ${self:custom.websiteAlias}
-            - www.${self:custom.websiteAlias}
+            - ''
           DefaultCacheBehavior:
             TargetOriginId: 'WebsiteBucketOrigin'
             ViewerProtocolPolicy: 'redirect-to-https'
