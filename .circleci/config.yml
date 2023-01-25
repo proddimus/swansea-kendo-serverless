@@ -11,9 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Serverless CLI and dependencies
+          name: Build Static Site Assets
           command: |
-            cd swansea-kendo-serverless
+            ls -ltr
             bundle install
             bundle exec jekyll build
       
@@ -23,10 +23,10 @@ jobs:
       AWS_DEFAULT_REGION: "eu-west-2"
     steps:
       - aws-cli/install
-
       - run:
           name: Install Serverless CLI and dependencies
           command: |
+            ls -ltr
             cd swansea-kendo-serverless
             sudo npm i -g serverless
             npm install
@@ -48,5 +48,6 @@ workflows:
     jobs:
       - build
       - deploy:
+          requires: build
           context:
             - Serverless Development
