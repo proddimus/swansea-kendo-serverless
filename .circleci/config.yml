@@ -11,6 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Move into project direcory
+          command: cd swansea-kendo-serverless
+      - run:
           name: Build Static Site Assets
           command: |
             ls -ltr
