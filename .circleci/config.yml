@@ -1,0 +1,39 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@3.0.0
+  serverless-framework: circleci/serverless-framework@2.0
+
+jobs:
+  build:
+    executor: serverless-framework/default
+    environment:
+      AWS_DEFAULT_REGION: "eu-west-2"
+    steps:
+      - checkout
+      - aws-cli/install
+
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            npm install
+      - run:
+          name: Run tests with code coverage
+          command: npm run test
+
+      - run:
+          name: Verify Credentials
+          command: aws sts get-caller-identity
+    #   - run:
+    #       name: Deploy application
+    #       command: sls deploy --region ${AWS_DEFAULT_REGION}
+
+
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context:
+            - Serverless Development
