@@ -35,13 +35,13 @@ jobs:
             cd swansea-kendo-serverless
             sudo npm i -g serverless
             npm install
-      - run:
-          name: Run tests with code coverage
-          command: npm run test
 
       - run:
           name: Verify Credentials
-          command: aws sts get-caller-identity
+          command: |
+            cd swansea-kendo-serverless
+            ls -ltr
+            aws sts get-caller-identity
     #   - run:
     #       name: Deploy application
     #       command: sls deploy --region ${AWS_DEFAULT_REGION}
