@@ -26,8 +26,6 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            ls -ltr
-            cd swansea-kendo-serverless
             sudo npm i -g serverless
             npm install
       - run:
@@ -52,3 +50,6 @@ workflows:
             - build
           context:
             - Serverless Development
+          # filters:
+          #   branches:
+          #     only: main # Only deploy when the commit is on the Ma
