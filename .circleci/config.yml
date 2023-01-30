@@ -16,6 +16,10 @@ jobs:
             cd swansea-kendo-serverless
             bundle install
             bundle exec jekyll build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - swansea-kendo-serverless
       
   deploy:
     executor: serverless-framework/default
@@ -23,9 +27,12 @@ jobs:
       AWS_DEFAULT_REGION: "eu-west-2"
     steps:
       - aws-cli/install
+      - attach_workspace:
+          at: ./
       - run:
           name: Install Serverless CLI and dependencies
           command: |
+            cd swansea-kendo-serverless
             sudo npm i -g serverless
             npm install
       - run:
