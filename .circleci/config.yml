@@ -35,16 +35,11 @@ jobs:
             cd swansea-kendo-serverless
             sudo npm i -g serverless
             npm install
-
       - run:
-          name: Verify Credentials
+          name: Deploy application
           command: |
             cd swansea-kendo-serverless
-            ls -ltr
-            aws sts get-caller-identity
-    #   - run:
-    #       name: Deploy application
-    #       command: sls deploy --region ${AWS_DEFAULT_REGION}
+            sls deploy --region ${AWS_DEFAULT_REGION}
 
 
 
@@ -57,6 +52,6 @@ workflows:
             - build
           context:
             - Serverless Development
-          # filters:
-          #   branches:
-          #     only: main # Only deploy when the commit is on the Ma
+          filters:
+            branches:
+              only: master # Only deploy when the commit is on the master branch
