@@ -6,15 +6,17 @@
   "dependencies": {
     "serverless": "^3.25.1",
     "serverless-plugin-cloudfront-lambda-edge": "^2.1.0",
-    "serverless-s3-sync": "^1.12.0"
+    "serverless-s3-sync": "^1.17.1"
   },
   "devDependencies": {
-    "serverless-certificate-creator": "^1.0.6",
+    "serverless-certificate-creator": "^1.5.3",
     "serverless-domain-manager": "^2.6.13",
     "serverless-plugin-ifelse": "^1.0.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "serverless deploy",
+    "build": "bundle exec jekyll build"
   },
   "keywords": [
     "kendo",

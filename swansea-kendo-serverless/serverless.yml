@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: eu-west-2
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'update-test'}
   deploymentBucket:
     name: com.serverless.${self:provider.region}.dep.archive
   stackTags:
@@ -20,99 +20,24 @@ custom:
     - If: '"${self:provider.stage}" != "dev"'
       Set:
         resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
-          - "${self:provider.stage}.swansea-kendo.club"
+          - "${self:provider.stage}.${self:custom.websiteAlias}"
       ElseSet:
         resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
           - www.${self:custom.websiteAlias}
           - ${self:custom.websiteAlias}
           
   websiteAlias: "swansea-kendo.club"
+  stagedWebsiteAlias: "${self:provider.stage}.${self:custom.websiteAlias}"
   objectPrefix: '${self:provider.stage}-${self:service}'
   s3Sync:
     - bucketName: '${self:custom.objectPrefix}'
       localDir: _site
       defaultContentType: text/html # optional
-#  customDomain:
-#    domainName: api.swansea-kendo.club
-#    certificateName: 'api.${self:custom.websiteAlias}'
-#    basePath: ''
-#    stage: ${self:provider.stage}
-#    createRoute53Record: true
-#  customCertificate:
-#    certificateName: 'api.${self:custom.websiteAlias}'
-#    hostedZoneId: 'ZLXG9P4B2IVKD'
 
 package:
-  excludeDevDependency: true
-  individually: true
   exclude:
     - ./**
 
 resources:
-  Resources:
-    WebsiteBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: '${self:custom.objectPrefix}'
-        WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: index.html
-    StaticSiteS3BucketPolicy:
-      Type: AWS::S3::BucketPolicy
-      Properties:
-        Bucket:
-          Ref: WebsiteBucket
-        PolicyDocument:
-          Statement:
-            -
-              Action:
-                - "s3:GetObject"
-              Effect: Allow
-              Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { Ref: WebsiteBucket }, "/*"]] }
-              Principal:
-                AWS: { "Fn::Join" : [" ", ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity", { Ref: WebsiteOriginAccessIdentity } ] ] } 
-    WebsiteOriginAccessIdentity:
-      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-      Properties:
-        CloudFrontOriginAccessIdentityConfig:
-          Comment: "Origin Access Identity"
-    WebsiteDistribution:
-      Type: AWS::CloudFront::Distribution
-      Properties:
-        DistributionConfig:
-          Aliases:
-            - ''
-          DefaultCacheBehavior:
-            TargetOriginId: 'WebsiteBucketOrigin'
-            ViewerProtocolPolicy: 'redirect-to-https'
-            DefaultTTL: 600 # ten minutes
-            MaxTTL: 600 # ten minutes
-            Compress: true
-            ForwardedValues:
-              QueryString: false
-              Cookies:
-                Forward: 'none'
-          CacheBehaviors:
-            -
-              TargetOriginId: 'WebsiteBucketOrigin'
-              PathPattern: '*'
-              ViewerProtocolPolicy: 'redirect-to-https'
-              ForwardedValues:
-                QueryString: false
-                Cookies:
-                  Forward: 'none'
-              DefaultTTL: 0
-              MaxTTL: 0
-          DefaultRootObject: 'index.html'
-          Enabled: true
-          PriceClass: 'PriceClass_100'
-          HttpVersion: 'http2' 
-          ViewerCertificate:
-            SslSupportMethod: "sni-only"
-            AcmCertificateArn: ${ssm:swansea-kendo-club-base-cert}
-          Origins:
-            -
-              Id: 'WebsiteBucketOrigin'
-              DomainName: { 'Fn::GetAtt': [ 'WebsiteBucket', 'DomainName' ] }
-              S3OriginConfig:
-                OriginAccessIdentity: { "Fn::Join": ["", ["origin-access-identity/cloudfront/", { Ref: WebsiteOriginAccessIdentity } ] ] }
+  - ${file(resources/website-distribution.yml)}
+ 
