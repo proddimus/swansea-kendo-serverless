@@ -1,0 +1,67 @@
+ Resources:
+    WebsiteBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: '${self:custom.objectPrefix}'
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    StaticSiteS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebsiteBucket
+        PolicyDocument:
+          Statement:
+            -
+              Action:
+                - "s3:GetObject"
+              Effect: Allow
+              Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { Ref: WebsiteBucket }, "/*"]] }
+              Principal:
+                AWS: { "Fn::Join" : [" ", ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity", { Ref: WebsiteOriginAccessIdentity } ] ] } 
+    WebsiteOriginAccessIdentity:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: "Origin Access Identity"
+    WebsiteDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Aliases:
+            - ''
+          DefaultCacheBehavior:
+            TargetOriginId: 'WebsiteBucketOrigin'
+            ViewerProtocolPolicy: 'redirect-to-https'
+            DefaultTTL: 600 # ten minutes
+            MaxTTL: 600 # ten minutes
+            Compress: true
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: 'none'
+          CacheBehaviors:
+            -
+              TargetOriginId: 'WebsiteBucketOrigin'
+              PathPattern: '*'
+              ViewerProtocolPolicy: 'redirect-to-https'
+              ForwardedValues:
+                QueryString: false
+                Cookies:
+                  Forward: 'none'
+              DefaultTTL: 0
+              MaxTTL: 0
+          DefaultRootObject: 'index.html'
+          Enabled: true
+          PriceClass: 'PriceClass_100'
+          HttpVersion: 'http2' 
+          ViewerCertificate:
+            SslSupportMethod: "sni-only"
+            AcmCertificateArn: ${ssm:swansea-kendo-club-base-cert}
+          Origins:
+            -
+              Id: 'WebsiteBucketOrigin'
+              DomainName: { 'Fn::GetAtt': [ 'WebsiteBucket', 'DomainName' ] }
+              S3OriginConfig:
+                OriginAccessIdentity: { "Fn::Join": ["", ["origin-access-identity/cloudfront/", { Ref: WebsiteOriginAccessIdentity } ] ] }

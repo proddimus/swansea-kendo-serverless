@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "serverless": "^2.62.0",
+    "serverless": "^3.25.1",
+    "serverless-plugin-cloudfront-lambda-edge": "^2.1.0",
     "serverless-s3-sync": "^1.17.1"
   },
   "devDependencies": {
@@ -15,7 +16,7 @@
   "scripts": {
     "build": "bundle exec jekyll build",
     "run": "bundle exec jekyll serve",
-    "serverless": "serverless",
+    "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
