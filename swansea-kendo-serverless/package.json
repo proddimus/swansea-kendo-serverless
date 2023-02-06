@@ -14,9 +14,10 @@
     "serverless-plugin-ifelse": "^1.0.7"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bundle exec jekyll build",
+    "run": "bundle exec jekyll serve",
     "deploy": "serverless deploy",
-    "build": "bundle exec jekyll build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "kendo",

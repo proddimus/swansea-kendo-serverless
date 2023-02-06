@@ -1,0 +1,57 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@3.0.0
+  serverless-framework: circleci/serverless-framework@2.0
+  ruby: circleci/ruby@2.0.0
+
+jobs:
+  build:
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Build Static Site Assets
+          command: |
+            cd swansea-kendo-serverless
+            bundle install
+            bundle exec jekyll build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - swansea-kendo-serverless
+      
+  deploy:
+    executor: serverless-framework/default
+    environment:
+      AWS_DEFAULT_REGION: "eu-west-2"
+    steps:
+      - aws-cli/install
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            cd swansea-kendo-serverless
+            sudo npm i -g serverless
+            npm install
+      - run:
+          name: Deploy application
+          command: |
+            cd swansea-kendo-serverless
+            npm run deploy -- --region ${AWS_DEFAULT_REGION} --stage update-test
+
+
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires: 
+            - build
+          context:
+            - Serverless Development
+          filters:
+            branches:
+              only: master # Only deploy when the commit is on the master branch
