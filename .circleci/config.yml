@@ -39,7 +39,7 @@ jobs:
           name: Deploy application
           command: |
             cd swansea-kendo-serverless
-            sls deploy --region ${AWS_DEFAULT_REGION}
+            npm run deploy -- --region ${AWS_DEFAULT_REGION} --stage update-test
 
 
 
