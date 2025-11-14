@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "serverless": "^3.25.1",
+    "serverless": "^4.23.0",
     "serverless-plugin-cloudfront-lambda-edge": "^2.1.0",
     "serverless-s3-sync": "^1.17.1"
   },
