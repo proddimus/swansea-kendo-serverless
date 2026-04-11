@@ -4,9 +4,17 @@ title: Swansea Kendo Club - Kendo in Swansea, South Wales
 ---
 <div class="album py-5 bg-light">
   <div class="container">
-    <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Thumbnail Gallery</h1>
+    <h1 class="fw-light text-center text-lg-start mt-4 mb-0">Thumbnail Gallery</h1>
     <hr class="mt-2 mb-5">
-    <div id="pixlee_container"></div><script type="text/javascript">window.PixleeAsyncInit = function() {Pixlee.init({apiKey:'ssHbcWhQXknafndCqPVF'});Pixlee.addSimpleWidget({widgetId:'26513'});};</script><script src="//instafeed.assets.pxlecdn.com/assets/pixlee_widget_1_0_0.js"></script>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for image in site.static_files %}
+        {% if image.path contains '/assets/gallery/' %}
+        <div class="col">
+          <img src="{{ image.path }}" class="img-fluid rounded" alt="{{ image.basename }}">
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </div>
   
