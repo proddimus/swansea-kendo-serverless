@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark px-3">
-  <a class="navbar-brand" href="/">Swansea Kendo Club</a>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark px-3" id="mainNav">
+  <a class="navbar-brand" href="/" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Fudoshin — Immovable Mind">不動心</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -11,8 +11,14 @@
       <li class="nav-item{% if page.url == "/training_times.html" %} active{% endif %}">
         <a class="nav-link" href="/training_times.html">Training Times</a>
       </li>
+      <li class="nav-item{% if page.url == "/getting_started.html" %} active{% endif %}">
+        <a class="nav-link" href="/getting_started.html">Getting Started</a>
+      </li>
       <li class="nav-item{% if page.url == "/gallery.html" %} active{% endif %}">
         <a class="nav-link" href="/gallery.html">Gallery</a>
+      </li>
+      <li class="nav-item{% if page.url == "/instructors.html" %} active{% endif %}">
+        <a class="nav-link" href="/instructors.html">Instructors</a>
       </li>
     </ul>
   </div>

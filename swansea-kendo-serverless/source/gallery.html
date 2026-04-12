@@ -1,16 +1,18 @@
 ---
 layout: default
-title: Swansea Kendo Club - Kendo in Swansea, South Wales
+title: Swansea Kendo Club - Gallery
 ---
-<div class="album py-5 bg-light">
+<div class="album py-5">
   <div class="container">
-    <h1 class="fw-light text-center text-lg-start mt-4 mb-0">Thumbnail Gallery</h1>
-    <hr class="mt-2 mb-5">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="page-header">
+      <h1>Gallery</h1>
+      <p class="lead">A glimpse into life at Swansea Kendo Club.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pb-5">
       {% for image in site.static_files %}
         {% if image.path contains '/assets/gallery/' %}
         <div class="col">
-          <img src="{{ image.path }}" class="img-fluid rounded" alt="{{ image.basename }}">
+          <img src="{{ image.path }}" class="gallery-img" alt="{{ image.basename }}">
         </div>
         {% endif %}
       {% endfor %}
