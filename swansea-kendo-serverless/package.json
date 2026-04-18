@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "bundle exec jekyll build",
-    "start": "bundle exec jekyll serve --livereload --livereload-port 35730 --incremental",
+    "start": "bundle exec jekyll serve --livereload --livereload-port 35730",
     "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

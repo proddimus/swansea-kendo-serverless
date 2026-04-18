@@ -144,6 +144,28 @@ h1, h2, h3, h4, h5, h6 {
 .page-container { height: 100%; }
 .album { background-color: var(--color-light); }
 
+/* Code of conduct */
+.conduct-section {
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 2.5rem;
+}
+
+.conduct-section--last {
+  border-bottom: none;
+}
+
+.conduct-section h4 {
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.conduct-section ol,
+.conduct-section ul {
+  color: #555;
+  line-height: 1.8;
+}
+
 /* Timeline */
 .timeline {
   position: relative;
