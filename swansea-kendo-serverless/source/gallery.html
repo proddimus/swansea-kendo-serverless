@@ -2,6 +2,8 @@
 layout: default
 title: Swansea Kendo Club - Gallery
 ---
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
+
 <div class="album py-5">
   <div class="container">
     <div class="page-header">
@@ -9,14 +11,19 @@ title: Swansea Kendo Club - Gallery
       <p class="lead">A glimpse into life at Swansea Kendo Club.</p>
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pb-5">
-      {% for image in site.static_files %}
-        {% if image.path contains '/assets/gallery/' %}
-        <div class="col">
+      {% assign gallery_images = site.static_files | where_exp: "file", "file.path contains '/assets/gallery/'" %}
+      {% for image in gallery_images %}
+      <div class="col">
+        <a href="{{ image.path }}" class="glightbox" data-gallery="kendo-gallery">
           <img src="{{ image.path }}" class="gallery-img" alt="{{ image.basename }}">
-        </div>
-        {% endif %}
+        </a>
+      </div>
       {% endfor %}
     </div>
   </div>
 </div>
-  
+
+<script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
+<script>
+  GLightbox({ selector: '.glightbox', touchNavigation: true, zoomable: true, maxZoomRatio: 1.2 });
+</script>
