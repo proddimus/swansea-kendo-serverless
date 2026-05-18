@@ -2,3 +2,6 @@ port: 8080
 source: source
 destination: _site
 force_polling: true
+url: "https://www.swansea-kendo.club"
+plugins:
+  - jekyll-sitemap
