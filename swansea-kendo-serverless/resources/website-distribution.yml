@@ -3,9 +3,6 @@
       Type: AWS::S3::Bucket
       Properties:
         BucketName: '${self:custom.objectPrefix}'
-        WebsiteConfiguration:
-          IndexDocument: index.html
-          ErrorDocument: index.html
     StaticSiteS3BucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -29,8 +26,7 @@
       Type: AWS::CloudFront::Distribution
       Properties:
         DistributionConfig:
-          Aliases:
-            - ''
+          Aliases: ${self:custom.aliases.${self:provider.stage}, self:custom.aliases.other}
           DefaultCacheBehavior:
             TargetOriginId: 'WebsiteBucketOrigin'
             ViewerProtocolPolicy: 'redirect-to-https'
@@ -62,6 +58,6 @@
           Origins:
             -
               Id: 'WebsiteBucketOrigin'
-              DomainName: { 'Fn::GetAtt': [ 'WebsiteBucket', 'DomainName' ] }
+              DomainName: { "Fn::Sub": "${WebsiteBucket}.s3.amazonaws.com" }
               S3OriginConfig:
                 OriginAccessIdentity: { "Fn::Join": ["", ["origin-access-identity/cloudfront/", { Ref: WebsiteOriginAccessIdentity } ] ] }

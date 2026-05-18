@@ -1,12 +1,30 @@
 ---
 layout: default
-title: Swansea Kendo Club - Kendo in Swansea, South Wales
+title: Swansea Kendo Club - Gallery
+description: Photos from training sessions and events at Swansea Kendo Club.
 ---
-<div class="album py-5 bg-light">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/css/glightbox.min.css">
+
+<div class="album py-5">
   <div class="container">
-    <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Thumbnail Gallery</h1>
-    <hr class="mt-2 mb-5">
-    <div id="pixlee_container"></div><script type="text/javascript">window.PixleeAsyncInit = function() {Pixlee.init({apiKey:'ssHbcWhQXknafndCqPVF'});Pixlee.addSimpleWidget({widgetId:'26513'});};</script><script src="//instafeed.assets.pxlecdn.com/assets/pixlee_widget_1_0_0.js"></script>
+    <div class="page-header">
+      <h1>Gallery</h1>
+      <p class="lead">A glimpse into life at Swansea Kendo Club.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pb-5">
+      {% assign gallery_images = site.static_files | where_exp: "file", "file.path contains '/assets/gallery/'" %}
+      {% for image in gallery_images %}
+      <div class="col">
+        <a href="{{ image.path }}" class="glightbox" data-gallery="kendo-gallery">
+          <img src="{{ image.path }}" class="gallery-img" alt="{{ image.basename }}">
+        </a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
-  
+
+<script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
+<script>
+  GLightbox({ selector: '.glightbox', touchNavigation: true, zoomable: true, maxZoomRatio: 1.2 });
+</script>

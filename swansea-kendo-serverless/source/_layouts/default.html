@@ -1,28 +1,64 @@
 <!doctype html>
-<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>{{ page.title }}</title>
     <meta charset="UTF-8">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+    {% endif %}
+    <link rel="canonical" href="https://www.swansea-kendo.club{{ page.url }}">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Swansea Kendo Club">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:url" content="https://www.swansea-kendo.club{{ page.url }}">
+    {% if page.description %}
+    <meta property="og:description" content="{{ page.description }}">
+    {% endif %}
+    <meta property="og:image" content="https://www.swansea-kendo.club/assets/untitled1of13.jpg">
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/assets/favicons/site.webmanifest">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap">
     <link rel="stylesheet" type="text/css" href="application.css" />
     <link rel="stylesheet" type="text/css" href="landing_page.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/49400f99ff.js" crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body class="h-100">
+  <body class="h-100" data-page="{{ page.url }}">
     <div class="h-100">
     {% include navbar.html %}
     <div class="page-container h-100">
       {{ content }}
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      (function () {
+      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+          if (!('ontouchstart' in window)) {
+            new bootstrap.Tooltip(el);
+          }
+        });
+        var nav = document.getElementById('mainNav');
+        var isHome = document.body.dataset.page === '/';
+        function updateNav() {
+          if (isHome && window.scrollY < 60) {
+            nav.classList.remove('bg-dark');
+            nav.classList.add('nav-hero');
+          } else {
+            nav.classList.add('bg-dark');
+            nav.classList.remove('nav-hero');
+          }
+        }
+        updateNav();
+        window.addEventListener('scroll', updateNav, { passive: true });
+      })();
+    </script>
   </body>
 </html>

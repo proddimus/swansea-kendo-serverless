@@ -1,13 +1,11 @@
 plugins:
   - serverless-s3-sync
-  - serverless-plugin-cloudfront-lambda-edge
-  - serverless-plugin-ifelse
 
 service: swansea-kendo-club-serverless
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs24.x
   region: eu-west-2
   stage: ${opt:stage, 'update-test'}
   deploymentBucket:
@@ -16,23 +14,18 @@ provider:
     website: swansea-kendo-site
 
 custom:
-  serverlessIfElse:
-    - If: '"${self:provider.stage}" != "dev"'
-      Set:
-        resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
-          - "${self:provider.stage}.${self:custom.websiteAlias}"
-      ElseSet:
-        resources.Resources.WebsiteDistribution.Properties.DistributionConfig.Aliases:
-          - www.${self:custom.websiteAlias}
-          - ${self:custom.websiteAlias}
-          
   websiteAlias: "swansea-kendo.club"
-  stagedWebsiteAlias: "${self:provider.stage}.${self:custom.websiteAlias}"
   objectPrefix: '${self:provider.stage}-${self:service}'
   s3Sync:
     - bucketName: '${self:custom.objectPrefix}'
       localDir: _site
-      defaultContentType: text/html # optional
+      defaultContentType: text/html
+  aliases:
+    prod:
+      - www.swansea-kendo.club
+      - swansea-kendo.club
+    other:
+      - ${self:provider.stage}.swansea-kendo.club
 
 package:
   exclude:
@@ -40,4 +33,3 @@ package:
 
 resources:
   - ${file(resources/website-distribution.yml)}
- 
