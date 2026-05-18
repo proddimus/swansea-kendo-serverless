@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@3.0.0
-  serverless-framework: circleci/serverless-framework@2.0
   ruby: circleci/ruby@2.0.0
 
 jobs:
@@ -23,7 +22,8 @@ jobs:
             - swansea-kendo-serverless
       
   deploy:
-    executor: serverless-framework/default
+    docker:
+      - image: cimg/node:lts
     environment:
       AWS_DEFAULT_REGION: "eu-west-2"
     steps:
@@ -31,16 +31,16 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: Install Serverless CLI and dependencies
+          name: Install osls and dependencies
           command: |
             cd swansea-kendo-serverless
-            sudo npm i -g serverless
+            sudo npm i -g osls
             npm install
       - run:
           name: Deploy application
           command: |
             cd swansea-kendo-serverless
-            npm run deploy -- --region ${AWS_DEFAULT_REGION} --stage dev
+            npm run deploy -- --region ${AWS_DEFAULT_REGION} --stage prod
 
 
 
